@@ -9,6 +9,11 @@ This document explains the mechanism, using a real run — a React + Express +
 Postgres todo app — as the worked example. For installation and commands, see
 the [README](README.md).
 
+> The run described here predates the multi-plan queue, so it is a single plan
+> from start to finish. Everything about the per-PR loop, the QA findings and
+> the costs is unchanged; what's new is that a project can now hold several
+> plans and work through them one at a time.
+
 ---
 
 ## The pipeline
@@ -18,7 +23,7 @@ weekend-project
       │
       ├─ 1. Environment + first-run detection
       ├─ 2. Intake interview        → config.yaml
-      ├─ 3. Planning                → plan.json + budget.json     ◀── you approve here
+      ├─ 3. Planning                → plans/ + budget.json        ◀── you approve here
       ├─ 4. UI mockups (frontend)   → ui-mockups/                 ◀── and here
       │
       └─ 5. Execution loop, once per PR:
@@ -40,7 +45,8 @@ hits an escalation.
 .claude/weekend-project/
   session.yaml        current phase, PR and round — the resume point
   config.yaml         interview answers
-  plan.json           the PRs, each with acceptance criteria
+  plans/              pending · active · done · deferred — each plan's PRs
+                      and their acceptance criteria
   budget.json         token estimate vs actual, per PR
   decisions.jsonl     append-only log of every non-obvious technical choice
   memory/             patterns, decisions, qa-learnings, preferences, feedback
