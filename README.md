@@ -11,7 +11,7 @@ Both follow the [Agent Skills](https://agentskills.io) open standard: plain mark
 
 ## The skills
 
-### 🏗 [weekend-project](plugins/weekend-project/) — autonomous project builder
+### [weekend-project](plugins/weekend-project/) — autonomous project builder
 
 Describe what you want in one line. It interviews you, plans the build as a series of small PRs with explicit acceptance criteria, shows you a token estimate, and — once you approve — builds each PR test-first, reviews its own work as an adversarial QA engineer, fixes what it finds, runs a production gate, and merges to `develop-ai`.
 
@@ -19,13 +19,27 @@ You approve once, then step away.
 
 → [README](plugins/weekend-project/README.md) · [How it works, with a real run](plugins/weekend-project/HOW-IT-WORKS.md)
 
-### ⚙ [code-better](plugins/code-better/) — behavioural modes
+### [code-better](plugins/code-better/) — behavioural modes
 
 Forty one-word commands that set how the agent works and hold it for the session. `cb-read-only` so it looks without touching. `cb-minimal` so a small fix stays small. `cb-careful` before the migration. They stack, and safety modes always beat action modes.
 
 → [README](plugins/code-better/README.md)
 
 **They're independent.** Use either on its own. `weekend-project` gets slightly richer when `code-better` is installed alongside it, but never depends on it.
+
+---
+
+## Status
+
+Both skills are at 1.0.0 and installable. What that means in practice:
+
+- The **per-PR loop** — build, QA rounds, fix rounds, merge gate — is what the [worked example](plugins/weekend-project/HOW-IT-WORKS.md) documents, on a real project, with the findings and the token cost it produced.
+- The **plan queue** and the **worktree state handling** are new in this release and have not been run end to end yet.
+- `code-better` has been in daily use, but this is its first packaged release.
+
+Rough edges are likely in the newer parts. [Discussions](https://github.com/maneja81/claude-skills/discussions) is the place for them.
+
+See [CHANGELOG.md](CHANGELOG.md) for what shipped, and [DECISIONS.md](DECISIONS.md) for why the non-obvious parts work the way they do.
 
 ---
 

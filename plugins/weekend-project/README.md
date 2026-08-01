@@ -24,7 +24,7 @@ weekend-project
                                                    up to 3 rounds
 ```
 
-📖 **[HOW-IT-WORKS.md](HOW-IT-WORKS.md)** — a walkthrough of a real run (React + Express + Postgres todo app), including what the QA pass actually caught and what it cost.
+**[HOW-IT-WORKS.md](HOW-IT-WORKS.md)** — a walkthrough of a real run (React + Express + Postgres todo app), including what the QA pass actually caught and what it cost.
 
 ---
 
