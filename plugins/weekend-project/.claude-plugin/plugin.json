@@ -1,0 +1,22 @@
+{
+  "name": "weekend-project",
+  "displayName": "Weekend Project",
+  "version": "1.0.0",
+  "description": "Autonomous end-to-end project builder: intake interview, PR-by-PR plan with token budget, then TDD builds reviewed by a QA agent and merged through a production gate.",
+  "author": {
+    "name": "Mohit Aneja",
+    "url": "https://github.com/maneja81"
+  },
+  "homepage": "https://github.com/maneja81/claude-skills/tree/main/plugins/weekend-project",
+  "repository": "https://github.com/maneja81/claude-skills",
+  "license": "MIT",
+  "keywords": [
+    "autonomous",
+    "tdd",
+    "code-review",
+    "qa",
+    "pull-request",
+    "typescript",
+    "playwright"
+  ]
+}

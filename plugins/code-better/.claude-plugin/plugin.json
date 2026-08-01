@@ -1,0 +1,21 @@
+{
+  "name": "code-better",
+  "displayName": "Code Better",
+  "version": "1.0.0",
+  "description": "39 stackable behavioural mode commands for Claude Code. Set a mode once — cb-read-only, cb-careful, cb-minimal, cb-plan, cb-explore, cb-prod — and it stays active for the session.",
+  "author": {
+    "name": "Mohit Aneja",
+    "url": "https://github.com/maneja81"
+  },
+  "homepage": "https://github.com/maneja81/claude-skills/tree/main/plugins/code-better",
+  "repository": "https://github.com/maneja81/claude-skills",
+  "license": "MIT",
+  "keywords": [
+    "modes",
+    "workflow",
+    "code-review",
+    "safety",
+    "planning",
+    "productivity"
+  ]
+}

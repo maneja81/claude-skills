@@ -1,0 +1,57 @@
+{
+  "name": "maneja81-skills",
+  "owner": {
+    "name": "Mohit Aneja",
+    "url": "https://github.com/maneja81"
+  },
+  "description": "Agent skills for disciplined software delivery — an autonomous PR-by-PR project builder, and a behavioural mode system for everyday work.",
+  "plugins": [
+    {
+      "name": "weekend-project",
+      "source": "./plugins/weekend-project",
+      "displayName": "Weekend Project",
+      "description": "Autonomous end-to-end project builder. Runs an intake interview, generates a PR-by-PR plan with a token budget, then builds each PR with Sr. Developer and Sr. QA agent roles — TDD, TypeScript strict, Playwright validation — looping review/fix rounds until a merge gate passes.",
+      "version": "1.0.0",
+      "author": {
+        "name": "Mohit Aneja",
+        "url": "https://github.com/maneja81"
+      },
+      "homepage": "https://github.com/maneja81/claude-skills/tree/main/plugins/weekend-project",
+      "repository": "https://github.com/maneja81/claude-skills",
+      "license": "MIT",
+      "category": "workflow",
+      "keywords": [
+        "autonomous",
+        "tdd",
+        "code-review",
+        "qa",
+        "pull-request",
+        "typescript",
+        "playwright"
+      ]
+    },
+    {
+      "name": "code-better",
+      "source": "./plugins/code-better",
+      "displayName": "Code Better",
+      "description": "39 stackable behavioural mode commands. Type cb-read-only, cb-careful, cb-minimal, cb-plan, cb-explore or cb-prod and the mode stays active for the session — with safety modes that always win over action modes.",
+      "version": "1.0.0",
+      "author": {
+        "name": "Mohit Aneja",
+        "url": "https://github.com/maneja81"
+      },
+      "homepage": "https://github.com/maneja81/claude-skills/tree/main/plugins/code-better",
+      "repository": "https://github.com/maneja81/claude-skills",
+      "license": "MIT",
+      "category": "workflow",
+      "keywords": [
+        "modes",
+        "workflow",
+        "code-review",
+        "safety",
+        "planning",
+        "productivity"
+      ]
+    }
+  ]
+}
