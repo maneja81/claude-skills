@@ -53,10 +53,15 @@ if [ "$ACTION" = "list" ]; then
 fi
 
 if [ "$SCOPE" = "project" ]; then
-  DEST_ROOT="$(pwd)/.claude/skills"
+  CLAUDE_ROOT="$(pwd)/.claude"
 else
-  DEST_ROOT="${HOME}/.claude/skills"
+  CLAUDE_ROOT="${HOME}/.claude"
 fi
+DEST_ROOT="${CLAUDE_ROOT}/skills"
+# Backups must live OUTSIDE skills/ — any directory in there containing a
+# SKILL.md is loaded as a skill, so an in-place backup would register a second,
+# stale copy competing with the real one.
+BACKUP_ROOT="${CLAUDE_ROOT}/skill-backups"
 
 if [ "$ACTION" = "uninstall" ]; then
   for skill in "${SELECTED[@]}"; do
@@ -98,9 +103,10 @@ for skill in "${SELECTED[@]}"; do
 
   # Back up an existing install rather than clobbering local edits.
   if [ -d "$DEST" ]; then
-    BACKUP="${DEST}.backup-$(date +%Y%m%d%H%M%S)"
+    mkdir -p "$BACKUP_ROOT"
+    BACKUP="${BACKUP_ROOT}/${skill}.backup-$(date +%Y%m%d%H%M%S)"
     mv "$DEST" "$BACKUP"
-    echo "Existing ${skill} moved to ${BACKUP}"
+    echo "Existing ${skill} backed up to ${BACKUP}"
   fi
 
   cp -R "$SRC" "$DEST"
