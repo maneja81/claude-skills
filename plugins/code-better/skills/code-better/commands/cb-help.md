@@ -29,7 +29,7 @@ EXECUTION
 
 DEBUGGING & FIXING
   cb-debug        — reproduce → hypothesis → test → confirm before fixing
-  cb-fix          — implement confirmed fix: minimal scope, recurrence check, regression guard
+  cb-fix          — implement confirmed fix: minimal scope, recurrence check, regression guard, unit + E2E tests
 
 REVIEW & VALIDATION
   cb-cleanup      — pre-PR: baseline verify, dead code, conventions, prod readiness, re-verify
@@ -38,6 +38,7 @@ REVIEW & VALIDATION
   cb-prod         — production readiness audit: security, reliability, config, observability
   cb-verify       — lint + typecheck + build + tests in one gate
   cb-validate-data — post-data-operation audit: counts, integrity, correctness
+  cb-ship         — validate → raise PR → wait for CI → merge to development branch
 
 BEHAVIORAL MODIFIERS (stack with anything)
   cb-read-only    — no file edits without approval

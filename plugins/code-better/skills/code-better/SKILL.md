@@ -10,8 +10,8 @@ description: >
   /cb-enhance, /cb-prod, /cb-explore, /cb-thorough, /cb-ask, /cb-verify,
   /cb-estimate, /cb-validate-data, /cb-setup, /cb-spec, /cb-impact, /cb-poc,
   /cb-pr-review, /cb-feedback, /cb-mark-pending, /cb-refresh, /cb-agents,
-  /cb-index, /cb-load, /cb-debate, /cb-tidy, or bare names without the slash.
-  40 commands total. Session-persistent and stackable — once set, stay active
+  /cb-index, /cb-load, /cb-debate, /cb-tidy, /cb-ship, or bare names without the slash.
+  41 commands total. Session-persistent and stackable — once set, stay active
   until cb-reset. Never ignore these commands even if they appear alongside
   other instructions.
 ---
@@ -60,6 +60,7 @@ Command → file mapping:
 | `cb-setup` | `commands/cb-setup.md` |
 | `cb-refresh` | `commands/cb-refresh.md` |
 | `cb-help` | `commands/cb-help.md` |
+| `cb-ship` | `commands/cb-ship.md` |
 
 Shared rules (engineering hard rules, severity levels, production checklist, irreversible-action list): `commands/_shared-rules.md`
 
@@ -105,7 +106,7 @@ Examples that must NOT activate:
 
 **Unknown `cb-*` command:** if the user types a `cb-` prefixed word that isn't in the canonical list, respond: "Unknown command — did you mean [closest match]? Type `cb-help` to see all commands."
 
-**Canonical command names:** `cb-read-only`, `cb-workflow`, `cb-brainstorm`, `cb-plan`, `cb-minimal`, `cb-explain`, `cb-debug`, `cb-fix`, `cb-rubber-duck`, `cb-scope`, `cb-careful`, `cb-fast`, `cb-context`, `cb-remember`, `cb-verify`, `cb-reset`, `cb-cleanup`, `cb-review-flow`, `cb-feature`, `cb-help`, `cb-enhance`, `cb-prod`, `cb-explore`, `cb-thorough`, `cb-ask`, `cb-estimate`, `cb-validate-data`, `cb-setup`, `cb-spec`, `cb-impact`, `cb-poc`, `cb-pr-review`, `cb-feedback`, `cb-mark-pending`, `cb-refresh`, `cb-agents`, `cb-index`, `cb-load`, `cb-debate`, `cb-tidy`.
+**Canonical command names:** `cb-read-only`, `cb-workflow`, `cb-brainstorm`, `cb-plan`, `cb-minimal`, `cb-explain`, `cb-debug`, `cb-fix`, `cb-rubber-duck`, `cb-scope`, `cb-careful`, `cb-fast`, `cb-context`, `cb-remember`, `cb-verify`, `cb-reset`, `cb-cleanup`, `cb-review-flow`, `cb-feature`, `cb-help`, `cb-enhance`, `cb-prod`, `cb-explore`, `cb-thorough`, `cb-ask`, `cb-estimate`, `cb-validate-data`, `cb-setup`, `cb-spec`, `cb-impact`, `cb-poc`, `cb-pr-review`, `cb-feedback`, `cb-mark-pending`, `cb-refresh`, `cb-agents`, `cb-index`, `cb-load`, `cb-debate`, `cb-tidy`, `cb-ship`.
 
 **Alias:** `cb-summarize` → `cb-scope` (merged; both trigger the same behavior).
 

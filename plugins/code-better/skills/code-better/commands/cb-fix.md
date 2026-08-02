@@ -1,6 +1,6 @@
 # cb-fix
 
-Read `commands/_shared-rules.md` if not already loaded this session.
+Read `commands/_shared-rules.md` if not already loaded this session. Also read `CLAUDE.md` if it exists and has not been read this session — it contains project-specific coding conventions, architecture decisions, and instructions that govern all work in this repo.
 
 Implement a production-ready fix for a confirmed bug. Chains from `cb-debug` — reads confirmed root cause from session context. Also works standalone when the cause is already known.
 
@@ -42,11 +42,10 @@ Stricter than normal step validation:
 ## Phase 4: Recurrence check
 
 Search the codebase for the same bug pattern:
-```
+
 Recurrence check: [pattern searched]
   ✓ No other instances found
   ⚠ Same pattern found in: [file:line] — [description]
-```
 
 If recurrences found, ask whether to fix them now or flag for follow-up — don't silently fix inline.
 
@@ -61,22 +60,73 @@ Check callers and dependents of anything changed:
 
 ---
 
-## Phase 6: Summary
+## Phase 6: Test suite
+
+Run the full test suite. Show raw output — never self-report results.
+
+**Step 1 — detect and run unit/integration tests:**
+
+Check for the project's test runner in this order:
+- `package.json` → scripts.test (jest, vitest, mocha, etc.)
+- `pyproject.toml` / `setup.cfg` / `pytest.ini` → pytest
+- `go.mod` → go test ./...
+- `Makefile` → look for a `test` target
+- `Rakefile` / `.rspec` → rspec
+
+Run what's found. If nothing is found, say so — do not invent a command.
+
+Report format:
+
+**Tests:** ✓ [N passed] / ✗ [N failed] / – not found
+- ✗ [test name] — [failure reason, one line]
+
+If any tests fail: stop here, report the failure, and do not proceed to Phase 7 or suggest cb-ship until fixed.
+
+**Step 2 — detect and run E2E tests with Playwright (if available):**
+
+Check for Playwright:
+- `package.json` dependencies or devDependencies contains `@playwright/test` or `playwright`
+- `playwright.config.ts` / `playwright.config.js` exists in the project root
+
+If Playwright is found:
+1. Check if the app needs to be running first — look for a `webServer` config in `playwright.config.*`. If present, Playwright will start it automatically; note this in output.
+2. Run: `npx playwright test` (or `yarn playwright test` / `pnpm playwright test` — match what the project uses)
+3. Show raw output including browser, test names, pass/fail counts, and any screenshots or trace paths on failure.
+
+If Playwright is not found, check for other E2E runners:
+- `cypress.config.*` → `npx cypress run`
+- `wdio.conf.*` → `npx wdio`
+- `nightwatch.conf.*` → `npx nightwatch`
+
+Run whichever is found. If none found, mark E2E as `– not configured`.
+
+Report format:
+
+**E2E:** ✓ [N passed] / ✗ [N failed] / – not configured
+- ✗ [test name] — [failure reason, one line]
+- 📸 Screenshot / trace saved at: [path] (if available)
+
+If any E2E tests fail: stop, report, and do not proceed to Phase 7 until addressed. Ask whether to fix the E2E failures now or skip E2E and proceed anyway (only appropriate when E2E failures are pre-existing and unrelated to this fix).
+
+---
+
+## Phase 7: Summary
 
 **Fix Summary** (render as plain markdown)
 
 - **Root cause:** [one line]
 - **Fix:** [what changed and why it resolves the cause]
-- **Reproduced after fix:** [yes — [what was tested and what happened]]
+- **Reproduced after fix:** [yes — what was tested and what happened]
 - **Files changed:** [list]
-- **Tests:** [passed / fixed N / no coverage — worth adding]
+- **Unit/integration tests:** [passed N / failed N — details]
+- **E2E tests:** [passed N / failed N / not configured]
 - **Recurrences:** [none / N found — action taken]
 - **Regression check:** [clean / concerns]
-- **Pre-Done Gate:** [passed / [what failed and how it was fixed]]
+- **Pre-Done Gate:** [passed / what failed and how it was fixed]
 
 **Flagged for follow-up:** [anything noticed but intentionally left out of scope]
 
-Run `cb-cleanup` before raising the PR.
+Ready to ship? Run `cb-ship` to validate, raise a PR, and merge to development.
 
 ---
 
