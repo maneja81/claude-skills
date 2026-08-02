@@ -123,13 +123,15 @@ Wait for explicit confirmation before Phase 4.
 
 Before archiving anything, extract deferred issues from files marked "Known-issue" in Phase 2.
 
-For each issue found, prepare an entry:
+For each issue found, assign the next sequential ID (`KI-N`, continuing from the highest existing ID in `known-issues.md` — start at `KI-1` if the file is new) and prepare an entry:
 
 ```
-### [Short issue title]
+### KI-[N] — [short issue title]
 
-**Source:** `[file path]` — [date found or last-modified date of the file]
+**Severity:** ⛔ Critical / ⚠ Moderate / · Minor (best-effort from context — mark "Unknown" if not determinable)
+**Category:** Bug / Edge case / Dead code / Production readiness
 **Status:** Deferred
+**Source:** `[file path]` — [date found or last-modified date of the file]
 **Description:** [what the problem is — one to three sentences, enough to understand it cold]
 **Impact:** [what breaks or is missing if this isn't fixed — or "Unknown"]
 **Blocked by / Deferred because:** [reason it wasn't addressed]
@@ -143,13 +145,15 @@ If `0-cowork/memory/known-issues.md` does not exist, create it:
 ```markdown
 # Known Issues
 
-Deferred bugs, gaps, and follow-up items. Updated by cb-tidy and cb-workflow.
-Add new items manually or via cb-tidy. Resolve items by editing Status to "Resolved" and adding a resolution note — never delete entries.
+Deferred bugs, gaps, and follow-up items. Updated by cb-audit, cb-tidy, and cb-workflow.
+Resolve items by editing Status — never delete entries.
+
+Status values: Open · In Progress · Fixed · Won't Fix · Deferred
 
 ---
 ```
 
-Append all extracted entries. Never overwrite existing entries.
+Append all extracted entries. Never overwrite existing entries — never renumber IDs already in use.
 
 ---
 

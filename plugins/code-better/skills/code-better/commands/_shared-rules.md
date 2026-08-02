@@ -95,7 +95,7 @@ Applies in `cb-careful` mode and referenced by `cb-workflow`, `cb-fix`, `cb-feat
 
 ## Severity Levels
 
-Used in reports produced by `cb-prod`, `cb-review-flow`, `cb-enhance`, `cb-spec`, `cb-impact`:
+Used in reports produced by `cb-prod`, `cb-review-flow`, `cb-enhance`, `cb-spec`, `cb-impact`, `cb-audit`:
 
 | Level | Symbol | Meaning |
 |---|---|---|
@@ -107,7 +107,7 @@ Used in reports produced by `cb-prod`, `cb-review-flow`, `cb-enhance`, `cb-spec`
 
 ## Production Readiness Checklist
 
-Used by `cb-prod`, `cb-cleanup`, `cb-workflow` post-validation, `cb-feature` Phase 5:
+Used by `cb-prod`, `cb-audit`, `cb-cleanup`, `cb-workflow` post-validation, `cb-feature` Phase 5:
 
 **Security**
 - No secrets, tokens, API keys hardcoded
