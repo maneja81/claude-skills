@@ -36,6 +36,7 @@ REVIEW & VALIDATION
   cb-review-flow  — trace end-to-end flow impact, read-only
   cb-pr-review    — full PR/diff review: correctness, edge cases, tests, conventions, prod readiness
   cb-prod         — production readiness audit: security, reliability, config, observability
+  cb-audit        — full-app sweep for bugs, gaps, edge cases, dead code — logs to known-issues.md
   cb-verify       — lint + typecheck + build + tests in one gate
   cb-validate-data — post-data-operation audit: counts, integrity, correctness
   cb-ship         — validate → raise PR → wait for CI → merge to development branch

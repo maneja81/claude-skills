@@ -29,6 +29,18 @@ The per-PR loop is the part exercised by the run documented in `HOW-IT-WORKS.md`
 
 ---
 
+## code-better 1.1.0 — 2026-08-03
+
+### Added
+
+- `cb-audit` — a full-app, read-only sweep for bugs, edge cases, dead code and production readiness. Unlike `cb-prod` / `cb-review-flow` / `cb-pr-review`, which are scoped to a diff or a single change, `cb-audit` covers the whole codebase and persists what it finds to `0-cowork/memory/known-issues.md` as status-tracked entries, so items can be worked through one at a time with `cb-fix` → `cb-cleanup` → `cb-prod` → `cb-ship` across sessions.
+
+### Changed
+
+- `cb-tidy`'s known-issues extraction now uses the same ID/severity/category schema as `cb-audit`, so both commands write compatible entries into the same file.
+
+---
+
 ## code-better 1.0.0 — 2026-08-01
 
 First public release.

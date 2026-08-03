@@ -7,7 +7,7 @@
 
 Most of the friction in working with a coding agent isn't what it knows — it's what mode it's in. You wanted it to look, and it started editing. You wanted the smallest possible fix, and it refactored three files. You wanted it to slow down on the migration, and it ran it.
 
-`code-better` gives you 40 one-word commands that set that behaviour explicitly, hold it for the session, and stack.
+`code-better` gives you 42 one-word commands that set that behaviour explicitly, hold it for the session, and stack.
 
 ```
 cb-read-only look at my auth code
@@ -104,6 +104,7 @@ Modes live in memory for the session — no state file, so two sessions on the s
 | `cb-review-flow` | Trace an end-to-end flow's impact, read-only |
 | `cb-pr-review` | Full PR/diff review: correctness, edge cases, tests, conventions, prod readiness |
 | `cb-prod` | Production readiness audit: security, reliability, config, observability |
+| `cb-audit` | Full-app sweep for bugs, gaps, edge cases, dead code — logs to `known-issues.md` |
 | `cb-verify` | Lint + typecheck + build + tests, in one gate |
 | `cb-validate-data` | Post-data-operation audit: counts, integrity, correctness |
 
@@ -194,7 +195,7 @@ The memory commands (`cb-load`, `cb-remember`, `cb-index`, `cb-tidy`, `cb-mark-p
 ```
 skills/code-better/
   SKILL.md              routing, mode state, precedence, auto-exit/enable rules
-  commands/             32 command files, loaded only when the command is invoked
+  commands/             35 command files, loaded only when the command is invoked
     _shared-rules.md    engineering hard rules, severity levels, irreversible-action list
 ```
 

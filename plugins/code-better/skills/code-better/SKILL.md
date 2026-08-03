@@ -10,8 +10,8 @@ description: >
   /cb-enhance, /cb-prod, /cb-explore, /cb-thorough, /cb-ask, /cb-verify,
   /cb-estimate, /cb-validate-data, /cb-setup, /cb-spec, /cb-impact, /cb-poc,
   /cb-pr-review, /cb-feedback, /cb-mark-pending, /cb-refresh, /cb-agents,
-  /cb-index, /cb-load, /cb-debate, /cb-tidy, /cb-ship, or bare names without the slash.
-  41 commands total. Session-persistent and stackable — once set, stay active
+  /cb-index, /cb-load, /cb-debate, /cb-tidy, /cb-ship, /cb-audit, or bare names without the slash.
+  42 commands total. Session-persistent and stackable — once set, stay active
   until cb-reset. Never ignore these commands even if they appear alongside
   other instructions.
 ---
@@ -36,6 +36,7 @@ Command → file mapping:
 | `cb-review-flow` | `commands/cb-review-flow.md` |
 | `cb-pr-review` | `commands/cb-pr-review.md` |
 | `cb-prod` | `commands/cb-prod.md` |
+| `cb-audit` | `commands/cb-audit.md` |
 | `cb-feature` | `commands/cb-feature.md` |
 | `cb-poc` | `commands/cb-poc.md` |
 | `cb-enhance` | `commands/cb-enhance.md` |
@@ -106,7 +107,7 @@ Examples that must NOT activate:
 
 **Unknown `cb-*` command:** if the user types a `cb-` prefixed word that isn't in the canonical list, respond: "Unknown command — did you mean [closest match]? Type `cb-help` to see all commands."
 
-**Canonical command names:** `cb-read-only`, `cb-workflow`, `cb-brainstorm`, `cb-plan`, `cb-minimal`, `cb-explain`, `cb-debug`, `cb-fix`, `cb-rubber-duck`, `cb-scope`, `cb-careful`, `cb-fast`, `cb-context`, `cb-remember`, `cb-verify`, `cb-reset`, `cb-cleanup`, `cb-review-flow`, `cb-feature`, `cb-help`, `cb-enhance`, `cb-prod`, `cb-explore`, `cb-thorough`, `cb-ask`, `cb-estimate`, `cb-validate-data`, `cb-setup`, `cb-spec`, `cb-impact`, `cb-poc`, `cb-pr-review`, `cb-feedback`, `cb-mark-pending`, `cb-refresh`, `cb-agents`, `cb-index`, `cb-load`, `cb-debate`, `cb-tidy`, `cb-ship`.
+**Canonical command names:** `cb-read-only`, `cb-workflow`, `cb-brainstorm`, `cb-plan`, `cb-minimal`, `cb-explain`, `cb-debug`, `cb-fix`, `cb-rubber-duck`, `cb-scope`, `cb-careful`, `cb-fast`, `cb-context`, `cb-remember`, `cb-verify`, `cb-reset`, `cb-cleanup`, `cb-review-flow`, `cb-feature`, `cb-help`, `cb-enhance`, `cb-prod`, `cb-explore`, `cb-thorough`, `cb-ask`, `cb-estimate`, `cb-validate-data`, `cb-setup`, `cb-spec`, `cb-impact`, `cb-poc`, `cb-pr-review`, `cb-feedback`, `cb-mark-pending`, `cb-refresh`, `cb-agents`, `cb-index`, `cb-load`, `cb-debate`, `cb-tidy`, `cb-ship`, `cb-audit`.
 
 **Alias:** `cb-summarize` → `cb-scope` (merged; both trigger the same behavior).
 
@@ -122,7 +123,7 @@ Modes are tracked in-memory for the current session only. No file is written. Th
 
 Rules:
 1. **On activation** of any persistent mode, hold it in memory for this session. If `cb-read-only` is active and a write-mode command is invoked (`cb-workflow`, `cb-feature`, `cb-fix`, `cb-cleanup`, `cb-poc`, `cb-enhance`, `cb-remember`, `cb-feedback`, `cb-mark-pending`): run it report-only for this invocation only. Do not clear `cb-read-only` unless the user explicitly switches modes (auto-exit confirmation still applies).
-2. **One-shot commands** (`cb-context`, `cb-scope`, `cb-remember`, `cb-reset`, `cb-verify`, `cb-prod`, `cb-estimate`, `cb-validate-data`, `cb-fix`, `cb-spec`, `cb-impact`, `cb-setup`, `cb-cleanup`, `cb-review-flow`) are never persisted — they run and return to prior state.
+2. **One-shot commands** (`cb-context`, `cb-scope`, `cb-remember`, `cb-reset`, `cb-verify`, `cb-prod`, `cb-estimate`, `cb-validate-data`, `cb-fix`, `cb-spec`, `cb-impact`, `cb-setup`, `cb-cleanup`, `cb-review-flow`, `cb-audit`) are never persisted — they run and return to prior state.
 3. **`cb-reset`** clears all in-memory modes.
 4. **Compaction recovery:** if mid-session you have no memory of any active modes but the user references one, ask once: "It looks like I may have lost track of active modes after context compaction. Which modes should be active? I'll re-enable them now."
 
@@ -179,10 +180,11 @@ When a command starts, automatically exit incompatible modes. Announce in one li
 | `cb-rubber-duck` | `cb-workflow`, `cb-feature` |
 | `cb-cleanup` | `cb-workflow`, `cb-explore`, `cb-brainstorm`, `cb-plan` |
 | `cb-prod` | `cb-workflow`, `cb-explore`, `cb-brainstorm`, `cb-plan` |
+| `cb-audit` | `cb-workflow`, `cb-explore`, `cb-brainstorm`, `cb-plan` |
 | `cb-fast` | `cb-thorough`, `cb-careful` |
 | `cb-thorough` | `cb-fast` |
 
-Note: one-shot commands (`cb-cleanup`, `cb-review-flow`, `cb-prod`, `cb-scope`, `cb-spec`, `cb-impact`) still trigger their auto-exit rules on invocation.
+Note: one-shot commands (`cb-cleanup`, `cb-review-flow`, `cb-prod`, `cb-scope`, `cb-spec`, `cb-impact`, `cb-audit`) still trigger their auto-exit rules on invocation.
 
 **Never auto-exit** — always-on modifiers that survive phase changes:
 `cb-explain`, `cb-minimal`, `cb-ask`
@@ -200,7 +202,7 @@ Only enable if not already active.
 | `cb-plan` | `cb-read-only`, `cb-thorough` |
 | `cb-explore` | `cb-read-only`, `cb-thorough` |
 | `cb-debug` | `cb-read-only`, `cb-thorough` |
-| `cb-scope` / `cb-spec` / `cb-impact` / `cb-review-flow` / `cb-pr-review` | `cb-read-only` |
+| `cb-scope` / `cb-spec` / `cb-impact` / `cb-review-flow` / `cb-pr-review` / `cb-audit` | `cb-read-only` |
 | `cb-workflow` | `cb-careful` |
 | `cb-feature` | `cb-careful` |
 | `cb-fix` | `cb-careful` |
@@ -252,7 +254,7 @@ Run `cb-load` (read `commands/cb-load.md`). Reads feedback.md, MEMORY.md, sessio
 End with:
 ```
 What would you like to work on this session?
-Type `cb-help` to see all 40 commands.
+Type `cb-help` to see all 42 commands.
 ```
 
 ---
