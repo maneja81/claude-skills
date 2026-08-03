@@ -96,7 +96,68 @@ Do not proceed to cleanup until all six pass. If any fail, fix first and re-run 
 
 ---
 
-**After Pre-Done Gate passes — auto-run cleanup and prod audit**
+**After Pre-Done Gate passes — run live app check**
+
+Boot the app and confirm it works in a real process before cleanup. Run automatically — do not ask for permission.
+
+**Step 1 — detect start command:**
+
+Check in this order:
+- `package.json` scripts: `dev`, `start`, `serve` (prefer `dev` for local validation)
+- `Makefile`: look for a `dev`, `run`, or `start` target
+- `Procfile`: use the `web:` entry
+- Framework defaults: `next dev`, `vite`, `python manage.py runserver`, `go run .`, `rails s`, `cargo run`, `mix phx.server`
+
+If no start command can be detected, skip this block and note: "Live check skipped — could not detect a start command."
+
+**Step 2 — boot the app:**
+
+Start the process in the background. Tail its stdout/stderr until one of:
+- A "listening on port", "ready", "started", or "running at" message appears → confirmed up
+- 15 seconds pass with no such message → assume failed, show the last 20 lines of output and stop
+
+Show the confirmed port and URL.
+
+**Step 3 — smoke check (always run):**
+
+Hit the root URL and up to 3 key routes (infer from the codebase — routes file, nav links, or sitemap):
+
+```
+GET http://localhost:<port>/          → expect 2xx
+GET http://localhost:<port>/<route1>  → expect 2xx
+```
+
+Show the status code for each. Any 5xx or connection refused = live check failed — report and stop.
+
+**Step 4 — visual check (if Playwright is available):**
+
+Check for `@playwright/test` in `package.json` or `playwright.config.*` in the project root.
+
+If found:
+1. Open each smoke-checked URL in a real browser via Playwright
+2. Take a screenshot of each page — save to `0-cowork/screenshots/` with a timestamped filename
+3. Read the browser console for errors and failed network requests (4xx/5xx)
+
+Report:
+
+**Live check:**
+- ✓ Booted on port [N]
+- ✓/✗ [route] — [status code]
+- 📸 Screenshot: `0-cowork/screenshots/[filename]`
+- ⚠ Console errors: [list] / ✓ none
+- ⚠ Failed requests: [list] / ✓ none
+
+If no Playwright: mark visual check as `– not configured` and proceed.
+
+**Step 5 — tear down:**
+
+Kill the dev server process cleanly after the check completes.
+
+If the live check finds errors (5xx, console errors, failed requests): stop before cleanup, report findings, and ask whether to fix them now or proceed anyway.
+
+---
+
+**After live check passes — auto-run cleanup and prod audit**
 
 Run these automatically in order — do not ask for permission:
 
