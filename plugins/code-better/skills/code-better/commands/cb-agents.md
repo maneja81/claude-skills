@@ -461,12 +461,15 @@ Spawn BOTH agents in ONE message:
 >   - 0-cowork/agents/{slug}/outputs/plan.md (intent)
 >   - 0-cowork/agents/{slug}/outputs/workflow-report.md (what was flagged)
 >
-> Review across 5 dimensions:
+> Review across 6 dimensions:
 >   1. Correctness — does it do what the plan intended?
 >   2. Edge cases & error handling — are boundaries covered?
 >   3. Test coverage — if a test framework exists, are new paths tested?
 >   4. Conventions — matches existing project patterns from research?
->   5. Production readiness — no debug leftovers, secrets, missing error handling?
+>   5. Code quality & design principles — DRY, SOLID, complexity, on the changed files only.
+>   6. Production readiness — no debug leftovers, secrets, missing error handling?
+>
+> This is the code-quality lens, scoped to the diff. Blast-radius/integration is Review Agent B's job — don't duplicate it here.
 >
 > Verdict: "good to merge" / "merge with fixes" / "do not merge"
 > Save to: 0-cowork/agents/{slug}/outputs/pr-review.md
@@ -481,8 +484,9 @@ Spawn BOTH agents in ONE message:
 > Check:
 >   - Are all callers and dependents from the research call chain still intact?
 >   - Are types, contracts, and schema still consistent end-to-end?
->   - Any production blockers in the data flow the PR review won't catch?
->   - Integration surfaces, async paths, side effects?
+>   - Integration surfaces, async paths, side effects, cross-module/cross-service boundaries?
+>
+> This is the blast-radius/integration lens — not code quality. If something looks like a DRY/SOLID/convention issue, note it once as "flag for Review Agent A" and keep tracing rather than reviewing it yourself.
 >
 > Save to: 0-cowork/agents/{slug}/outputs/review-flow.md
 > Return: "Flow review complete → 0-cowork/agents/{slug}/outputs/review-flow.md"

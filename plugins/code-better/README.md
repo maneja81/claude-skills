@@ -7,7 +7,7 @@
 
 Most of the friction in working with a coding agent isn't what it knows — it's what mode it's in. You wanted it to look, and it started editing. You wanted the smallest possible fix, and it refactored three files. You wanted it to slow down on the migration, and it ran it.
 
-`code-better` gives you 42 one-word commands that set that behaviour explicitly, hold it for the session, and stack.
+`code-better` gives you 43 one-word commands that set that behaviour explicitly, hold it for the session, and stack.
 
 ```
 cb-read-only look at my auth code
@@ -54,6 +54,7 @@ Three properties do most of the work:
 - `cb-fast` compresses output — it never bypasses a verify gate, a plan approval, or an irreversible-action confirmation
 - `cb-fast` + `cb-careful` gives you one-line confirmations (`⚠ This deletes the table — confirm?`), not zero confirmations
 - With `cb-read-only` active, a write command runs report-only: it describes the change and writes a diff to scratch, and announces that it did so
+- Git and GitHub writes (commit, push, merge, opening or merging a PR, deleting a branch) always need an explicit upfront choice — handle it, or hand back the diff/PR draft and let you do it yourself. Reads (`status`, `diff`, `log`) never ask. `cb-ship` asks this before its first write, and asks again, specifically, right before the merge itself
 
 Modes live in memory for the session — no state file, so two sessions on the same project never interfere. If context compacts and the modes are lost, it asks you once which ones to restore rather than silently reverting to default behaviour.
 
@@ -71,6 +72,7 @@ Modes live in memory for the session — no state file, so two sessions on the s
 | `cb-impact` | Map the blast radius of a proposed change |
 | `cb-estimate` | Size a task: complexity, risk, effort breakdown |
 | `cb-explore` | Build a knowledge map of a project folder |
+| `cb-research` | Uncapped deep research on a specific ask — blast radius, edge cases, what will break |
 
 ### Research and planning
 
@@ -101,10 +103,10 @@ Modes live in memory for the session — no state file, so two sessions on the s
 | Command | |
 |---|---|
 | `cb-cleanup` | Pre-PR sweep: baseline verify, dead code, conventions, prod readiness, re-verify |
-| `cb-review-flow` | Trace an end-to-end flow's impact, read-only |
-| `cb-pr-review` | Full PR/diff review: correctness, edge cases, tests, conventions, prod readiness |
+| `cb-review-flow` | Blast-radius / integration only: dependents, contract drift — not code quality |
+| `cb-pr-review` | Diff code-quality review: correctness, edge cases, tests, conventions, DRY/SOLID, prod readiness |
 | `cb-prod` | Production readiness audit: security, reliability, config, observability |
-| `cb-audit` | Full-app sweep for bugs, gaps, edge cases, dead code — logs to `known-issues.md` |
+| `cb-audit` | Full-repo sweep: bugs, gaps, dead code, cross-file DRY/SOLID decay — logs to `known-issues.md` |
 | `cb-verify` | Lint + typecheck + build + tests, in one gate |
 | `cb-validate-data` | Post-data-operation audit: counts, integrity, correctness |
 
@@ -195,7 +197,7 @@ The memory commands (`cb-load`, `cb-remember`, `cb-index`, `cb-tidy`, `cb-mark-p
 ```
 skills/code-better/
   SKILL.md              routing, mode state, precedence, auto-exit/enable rules
-  commands/             35 command files, loaded only when the command is invoked
+  commands/             36 command files, loaded only when the command is invoked
     _shared-rules.md    engineering hard rules, severity levels, irreversible-action list
 ```
 

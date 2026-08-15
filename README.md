@@ -21,7 +21,7 @@ You approve once, then step away.
 
 ### [code-better](plugins/code-better/) — behavioural modes
 
-Forty-two one-word commands that set how the agent works and hold it for the session. `cb-read-only` so it looks without touching. `cb-minimal` so a small fix stays small. `cb-careful` before the migration. They stack, and safety modes always beat action modes.
+Forty-three one-word commands that set how the agent works and hold it for the session. `cb-read-only` so it looks without touching. `cb-minimal` so a small fix stays small. `cb-careful` before the migration. They stack, and safety modes always beat action modes.
 
 → [README](plugins/code-better/README.md)
 
@@ -31,7 +31,7 @@ Forty-two one-word commands that set how the agent works and hold it for the ses
 
 ## Status
 
-`weekend-project` is at 1.0.0 and `code-better` is at 1.1.0, both installable. What that means in practice:
+`weekend-project` is at 1.0.0 and `code-better` is at 1.2.0, both installable. What that means in practice:
 
 - The **per-PR loop** — build, QA rounds, fix rounds, merge gate — is what the [worked example](plugins/weekend-project/HOW-IT-WORKS.md) documents, on a real project, with the findings and the token cost it produced.
 - The **plan queue** and the **worktree state handling** are new in this release and have not been run end to end yet.

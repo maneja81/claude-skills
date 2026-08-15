@@ -2,7 +2,9 @@
 
 Read `commands/_shared-rules.md` if not already loaded this session.
 
-Full-app audit — read-only. Sweeps the whole codebase (not just a diff) for bugs, gaps, edge cases, and dead code, then writes every finding to `0-cowork/memory/known-issues.md` as a status-tracked entry. Unlike `cb-prod` / `cb-review-flow` / `cb-pr-review` (all scoped to a diff or a single change), `cb-audit` is the full-project sweep — and unlike those, it persists what it finds so work can be picked up across sessions.
+Full-app audit — read-only. Sweeps the whole codebase (not just a diff) for bugs, gaps, edge cases, dead code, and repo-wide design decay, then writes every finding to `0-cowork/memory/known-issues.md` as a status-tracked entry. Unlike `cb-prod` / `cb-review-flow` / `cb-pr-review` (all scoped to a diff or a single change), `cb-audit` is the full-project sweep — and unlike those, it persists what it finds so work can be picked up across sessions.
+
+**This command owns whole-repo-scale findings that a diff-scoped review structurally cannot see** — duplicate logic that lives in two files nobody is currently touching, or a god-object that grew slowly over many unrelated PRs. `cb-pr-review` catches DRY/SOLID issues introduced *in a single diff*; `cb-audit` catches the ones that only become visible when the whole codebase is in view at once.
 
 **Usage:**
 - `cb-audit` — full codebase
@@ -41,6 +43,11 @@ Check each of the following. Use the severity levels from `_shared-rules.md` (�
 - Unreachable branches (conditions that can never be true, code after unconditional return)
 - Commented-out code blocks left in place
 
+**Repo-wide design decay** *(whole-repo scope — this is unique to this command, not covered by diff-scoped reviews)*
+- **Cross-file DRY** — the same logic (not just similar-looking code — the same actual behaviour) implemented independently in two or more files that were never part of the same diff. Grep for likely duplicates (similar function names, similar string literals, similar validation/transform patterns) before concluding something is unique.
+- **Architecture-level SOLID violations** — files or classes that have accumulated multiple unrelated responsibilities over time (god objects/god files — flag by size + import fan-in/fan-out, not by a fixed line count); circular dependencies between modules; a low-level module that has come to depend on a high-level one.
+- These require holding more than one file in view at once — note explicitly which files were compared to reach each finding.
+
 **Production readiness**
 Run the full checklist from `_shared-rules.md` (security, reliability, config hygiene, observability, dead weight) across the scoped area, not just changed files.
 
@@ -75,7 +82,7 @@ For each new finding, assign the next sequential ID (`KI-N`, continuing from the
 ### KI-[N] — [short issue title]
 
 **Severity:** ⛔ Critical / ⚠ Moderate / · Minor
-**Category:** Bug / Edge case / Dead code / Production readiness
+**Category:** Bug / Edge case / Dead code / Design decay (DRY/SOLID) / Production readiness
 **Status:** Open
 **Found:** [date] via cb-audit
 **Location:** `[file:line]`
@@ -101,9 +108,10 @@ FINDINGS THIS RUN
 New entries: KI-[N] through KI-[M] → 0-cowork/memory/known-issues.md
 
 BY CATEGORY
-  Bugs:                 [N]
+  Bugs:                  [N]
   Edge cases / gaps:     [N]
   Dead code:             [N]
+  Design decay (DRY/SOLID): [N]
   Production readiness:  [N]
 
 NEXT STEPS

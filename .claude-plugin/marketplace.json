@@ -34,8 +34,8 @@
       "name": "code-better",
       "source": "./plugins/code-better",
       "displayName": "Code Better",
-      "description": "42 stackable behavioural mode commands. Type cb-read-only, cb-careful, cb-minimal, cb-plan, cb-explore, cb-prod or cb-audit and the mode stays active for the session — with safety modes that always win over action modes.",
-      "version": "1.1.0",
+      "description": "43 stackable behavioural mode commands. Type cb-read-only, cb-careful, cb-minimal, cb-plan, cb-research, cb-prod or cb-audit and the mode stays active for the session — with safety modes that always win over action modes.",
+      "version": "1.2.0",
       "author": {
         "name": "Mohit Aneja",
         "url": "https://github.com/maneja81"
