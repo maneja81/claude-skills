@@ -10,6 +10,11 @@
 #
 # Can also be run without cloning first:
 #   curl -fsSL https://raw.githubusercontent.com/maneja81/claude-skills/main/install.sh | bash
+#
+# To update: re-run the same install command. An existing install is never
+# overwritten in place — it's moved to ~/.claude/skill-backups/<skill>.backup-<timestamp>
+# first, then the fresh version is copied in. Restart Claude Code (or
+# /reload-plugins) afterwards to pick it up.
 
 set -euo pipefail
 
@@ -26,7 +31,7 @@ for arg in "$@"; do
     --uninstall) ACTION="uninstall" ;;
     --list)      ACTION="list" ;;
     -h|--help)
-      sed -n '2,13p' "$0" | sed 's/^# \{0,1\}//'
+      sed -n '2,17p' "$0" | sed 's/^# \{0,1\}//'
       exit 0 ;;
     -*)
       echo "Unknown option: $arg (try --help)" >&2

@@ -102,6 +102,15 @@ Download a bundle from [`bundles/`](bundles/) and upload it under **Settings →
 
 Uploaded skills are private to your account. On Team or Enterprise, use the org provisioning flow to share one.
 
+### Updating
+
+| Install path | How to update |
+|---|---|
+| Plugin marketplace | `/plugin marketplace update maneja81-skills` then `/plugin update <name>`, then `/reload-plugins` |
+| Install script | Re-run the same install command (`curl \| bash`, or `./install.sh` from a fresh `git pull`). It never overwrites in place — the existing copy is moved to `~/.claude/skill-backups/<name>.backup-<timestamp>` first, so any local edits are preserved there, not lost. Restart Claude Code (or `/reload-plugins`) after. |
+| Manual copy | Re-run the same `cp -R` from an updated clone. This path has no backup step — if you made local edits to the installed copy, they're overwritten with no recovery. |
+| Claude Desktop / claude.ai | Download the new `bundles/<name>.zip` and re-upload under **Settings → Capabilities → Skills**, replacing the existing one. |
+
 ---
 
 ## Repository layout
