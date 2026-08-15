@@ -2,7 +2,9 @@
 
 Read `commands/_shared-rules.md` if not already loaded this session.
 
-Code review focused on correctness, intent, coverage, and production readiness. Read-only — no fixes. One-shot.
+Code review focused on correctness, intent, coverage, design principles, and production readiness — scoped strictly to the diff. Read-only — no fixes. One-shot.
+
+**This command owns code quality on changed files.** For whether the change breaks something downstream, use `cb-review-flow` instead — that command owns blast-radius/integration, not quality. Don't duplicate that work here; if you spot a broken dependent while reviewing, note it once under Correctness and move on rather than tracing the full call chain.
 
 **Usage:**
 - `cb-pr-review` — reviews unstaged + staged changes (`git diff HEAD`)
@@ -51,7 +53,18 @@ Are the changed behaviours covered by tests? For new functions: is there at leas
 **4. Conventions & consistency**
 Does this match existing naming, structure, error handling, and import style in the codebase? Any patterns introduced here that don't exist elsewhere? Check against `CLAUDE.md` conventions if present.
 
-**5. Production readiness**
+**5. Code quality & design principles** *(diff-scoped — this dimension is unique to this command)*
+Apply these directly to the changed files, not the whole codebase:
+
+- **DRY** — is any logic in this diff duplicated within the diff itself, or does it re-implement something that already exists elsewhere in the codebase? Grep for a likely existing equivalent before flagging "no existing version found" as a pass.
+- **SOLID, applied practically:**
+  - Single responsibility — does each changed function/class do one thing? Flag functions doing input validation + business logic + persistence in one block.
+  - Coupling & abstraction leaks — does this change reach across a layer boundary it shouldn't (e.g. a controller doing raw DB queries, a UI component embedding business rules)?
+  - Dependency direction — does the change make a lower-level module depend on a higher-level one, inverting the existing architecture?
+- **Complexity & readability** — function/file length, nesting depth, and naming judged against what's normal elsewhere in this codebase (not an abstract standard). Flag anything a reviewer would need to ask "why" about out loud.
+- **Cite the file:line for every finding** — a principle violation without a location is not actionable.
+
+**6. Production readiness**
 Apply the production readiness checklist from `_shared-rules.md`. Focus on: secrets/credentials, hardcoded values, debug logging left in, dead code, missing input validation at boundaries.
 
 ---
@@ -88,6 +101,9 @@ TEST COVERAGE              [skip block entirely if N/A]
 
 CONVENTIONS
   ⚠/· [file:line] [description]
+
+CODE QUALITY & DESIGN PRINCIPLES
+  ⛔/⚠/· [file:line] [DRY / SOLID / complexity — description]
 
 PRODUCTION READINESS
   ⛔/⚠/· [file:line] [description]

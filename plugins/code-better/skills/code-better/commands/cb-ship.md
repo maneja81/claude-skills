@@ -8,6 +8,20 @@ One-shot — returns to normal behavior after completing or failing.
 
 ---
 
+## Phase 0: Git write approval (ask before anything else)
+
+`cb-ship` opens a PR and merges it — both are git/GitHub write operations. Per `_shared-rules.md`'s Git & GitHub Write Operations policy, ask before running any of them:
+
+> This run will create a PR and, once checks pass, merge it and delete the source branch. Should I handle that myself, or will you take care of the PR/merge and just want the validation, prod-readiness scan, and PR description from me?
+
+**If the user wants to handle it themselves:** run Phases 1–3 (pre-flight checks, production readiness scan, PR description draft) exactly as below, then stop — hand over the draft PR description, the branch name, and the validation results, and do not run Phase 4 onward.
+
+**If the user wants the agent to handle it:** proceed through all phases. This covers PR creation — the merge in Phase 6 still gets its own explicit confirmation (see Phase 6), since deleting the branch is a separate irreversible step from creating the PR.
+
+Read/search operations (`git status`, `git diff`, `git log`, `gh pr checks`) never need this approval — only the writes do.
+
+---
+
 ## Phase 1: Pre-flight checks
 
 Before touching git, confirm the workspace is clean enough to ship.
@@ -135,7 +149,11 @@ If no CI is detected: proceed directly to Phase 6 and note it in the summary.
 
 ## Phase 6: Merge
 
-After CI passes (or if no CI), merge the PR:
+After CI passes (or if no CI), confirm before merging — this is a separate gate from Phase 0's upfront approval, because it's the actual irreversible step (merge + branch deletion):
+
+> Ready to merge: [PR URL] → [target branch], squash, branch deleted after. Proceed?
+
+Wait for explicit confirmation. Only then run:
 
 ```
 gh pr merge --squash --delete-branch

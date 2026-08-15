@@ -76,6 +76,24 @@ Any "✓ validated", "tests passed", or debug "Result" must show the actual comm
 
 ---
 
+## Git & GitHub Write Operations — Pre-Approval Required
+
+Applies to any command that can touch git or GitHub state: `cb-ship` today, and any future command that pushes, commits, merges, or opens/merges a PR.
+
+**Always pre-approved, no need to ask:** `git status`, `git diff`, `git log`, `git branch` (listing), `git merge-base`, `gh pr checks` (watching status), and any other read-only git/gh command.
+
+**Never pre-approved — requires an explicit upfront choice before the command runs any of these:** `git commit`, `git push`, `git merge`, `git checkout -b` / branch creation, `git branch -d`, `gh pr create`, `gh pr merge`, or anything else that changes git history, remote state, or GitHub state.
+
+Before a command reaches its first write operation, ask the user once:
+
+> This will need to [commit / push / open a PR / merge / delete a branch — name the specific actions this run requires]. Should I handle these myself, or will you take care of them and just want the [validation / draft / diff] from me?
+
+If the user wants to handle it themselves: run everything up to the point right before the first write operation, hand off what was produced (PR description, branch name, diff, validation results), and stop — do not execute any write.
+
+If the user wants the agent to handle it: proceed, but this pre-approval covers the *category* of action stated upfront, not a blanket yes for the rest of the session — a genuinely irreversible step within that category (see below) still gets its own specific confirmation before it runs.
+
+---
+
 ## Irreversible Actions — Always Confirm Before Proceeding
 
 Applies in `cb-careful` mode and referenced by `cb-workflow`, `cb-fix`, `cb-feature`:

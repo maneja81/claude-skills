@@ -15,6 +15,7 @@ PRE-WORK (run before planning)
   cb-impact       — map blast radius of a proposed change
   cb-estimate     — size a task: complexity, risk, effort breakdown
   cb-explore      — build a knowledge map of a project folder
+  cb-research     — uncapped deep research on a specific ask: blast radius, edge cases, what will break
 
 RESEARCH & PLANNING
   cb-brainstorm   — explore options grounded in codebase before picking a solution
@@ -33,10 +34,10 @@ DEBUGGING & FIXING
 
 REVIEW & VALIDATION
   cb-cleanup      — pre-PR: baseline verify, dead code, conventions, prod readiness, re-verify
-  cb-review-flow  — trace end-to-end flow impact, read-only
-  cb-pr-review    — full PR/diff review: correctness, edge cases, tests, conventions, prod readiness
+  cb-review-flow  — blast-radius/integration only: trace dependents, contract drift, read-only (not code quality)
+  cb-pr-review    — diff code-quality review: correctness, edge cases, tests, conventions, DRY/SOLID, prod readiness
   cb-prod         — production readiness audit: security, reliability, config, observability
-  cb-audit        — full-app sweep for bugs, gaps, edge cases, dead code — logs to known-issues.md
+  cb-audit        — full-repo sweep: bugs, gaps, dead code, cross-file DRY/SOLID decay — logs to known-issues.md
   cb-verify       — lint + typecheck + build + tests in one gate
   cb-validate-data — post-data-operation audit: counts, integrity, correctness
   cb-ship         — validate → raise PR → wait for CI → merge to development branch
@@ -64,7 +65,7 @@ UTILITIES
   cb-remember     — save context to MEMORY.md + session_logs.md (one-shot)
   cb-feedback     — log a correction rule so the mistake isn't repeated (one-shot)
   cb-context      — dump current session state + context health (one-shot)
-  cb-scope        — restate understanding + in/out of scope, wait for confirmation
+  cb-scope        — restate understanding + in/out of scope, wait for confirmation (alias: cb-summarize)
   cb-rubber-duck  — listen mode, ask questions, don't jump to solutions
   cb-setup        — generate CLAUDE.md, MEMORY.md, 0-cowork/memory/ from codebase analysis
   cb-help         — show this menu
