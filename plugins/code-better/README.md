@@ -7,7 +7,7 @@
 
 Most of the friction in working with a coding agent isn't what it knows — it's what mode it's in. You wanted it to look, and it started editing. You wanted the smallest possible fix, and it refactored three files. You wanted it to slow down on the migration, and it ran it.
 
-`code-better` gives you 43 one-word commands that set that behaviour explicitly, hold it for the session, and stack.
+`code-better` gives you 44 one-word commands that set that behaviour explicitly, hold it for the session, and stack.
 
 ```
 cb-read-only look at my auth code
@@ -73,6 +73,7 @@ Modes live in memory for the session — no state file, so two sessions on the s
 | `cb-estimate` | Size a task: complexity, risk, effort breakdown |
 | `cb-explore` | Build a knowledge map of a project folder |
 | `cb-research` | Uncapped deep research on a specific ask — blast radius, edge cases, what will break |
+| `cb-trace` | Read-only end-to-end trace of how an existing feature works today, hop by hop |
 
 ### Research and planning
 

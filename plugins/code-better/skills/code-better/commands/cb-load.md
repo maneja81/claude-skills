@@ -108,7 +108,7 @@ key decisions, open items, and project index in one pass.
 **Token budget for the integrated load (SKILL.md Step 1 + cb-load Step 2 combined):**
 - Files read: feedback.md + MEMORY.md + last 80 lines of session_logs.md + index.md = 4 files max
 - No additional memory files unless user requests them
-- Help menu: not shown; replaced with the single line "Type `cb-help` to see all 43 commands."
+- Help menu: not shown; replaced with the single line "Type `cb-help` to see all 44 commands."
 
 If `/code-better` fast-path is triggered (user opens with a command + task), `cb-load`
 still runs silently (feedback rules applied, index noted) but the briefing block is

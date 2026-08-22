@@ -16,6 +16,7 @@ PRE-WORK (run before planning)
   cb-estimate     — size a task: complexity, risk, effort breakdown
   cb-explore      — build a knowledge map of a project folder
   cb-research     — uncapped deep research on a specific ask: blast radius, edge cases, what will break
+  cb-trace        — read-only end-to-end trace of how an existing feature works today, hop by hop
 
 RESEARCH & PLANNING
   cb-brainstorm   — explore options grounded in codebase before picking a solution

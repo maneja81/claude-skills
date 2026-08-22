@@ -29,6 +29,14 @@ The per-PR loop is the part exercised by the run documented in `HOW-IT-WORKS.md`
 
 ---
 
+## code-better 1.3.0 — 2026-08-22
+
+### Added
+
+- `cb-trace` — read-only, end-to-end trace of how one existing feature works today, hop by hop (entry → auth/validation → business logic → data layer → external calls → response/side effects), citing file:line at each hop. Distinct from `cb-explore` (whole-project structural map) and `cb-review-flow` (diff-scoped "what changed" trace): `cb-trace` builds full context on an already-existing feature before any change is planned or made, for unfamiliar-code investigation, bug triage, or extending a feature with no prior context. Notes state changes, branches not fully walked, existing error handling, and known tests; optionally appends a "Traced Flows" section to the project's `cb-explore` memory entry.
+
+---
+
 ## code-better 1.2.0 — 2026-08-15
 
 ### Added
