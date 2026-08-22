@@ -53,7 +53,7 @@ done
 if [ "$ACTION" = "list" ]; then
   echo "Available skills:"
   echo "  weekend-project   Autonomous PR-by-PR project builder"
-  echo "  code-better       43 stackable behavioural mode commands"
+  echo "  code-better       44 stackable behavioural mode commands"
   exit 0
 fi
 
